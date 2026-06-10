@@ -1,0 +1,34 @@
+{
+  "calendar": {
+    "today": "Heute",
+    "previousMonth": "Vorheriger Monat",
+    "nextMonth": "Nächster Monat",
+    "moreEvents": "+{count} weitere",
+    "newEvent": "Neuer Termin",
+    "editEvent": "Termin bearbeiten",
+    "allDay": "Ganztägig",
+    "noEvents": "Keine Termine an diesem Tag",
+    "noEventsHint": "Tippe auf das Plus, um einen Termin für deine Familie anzulegen.",
+    "fields": {
+      "title": "Titel",
+      "titlePlaceholder": "z. B. Zahnarzttermin",
+      "date": "Datum",
+      "startTime": "Beginn",
+      "endTime": "Ende",
+      "location": "Ort",
+      "locationPlaceholder": "z. B. Rathaus",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Notizen, Details, was mitzubringen ist …",
+      "color": "Farbe"
+    },
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "confirmDelete": "Diesen Termin wirklich löschen? Das kann nicht rückgängig gemacht werden.",
+    "errors": {
+      "invalid": "Bitte überprüfe deine Eingaben – etwas fehlt oder ist ungültig.",
+      "invalidTimeRange": "Die Endzeit muss nach der Startzeit liegen.",
+      "notFound": "Dieser Termin existiert nicht mehr."
+    }
+  }
+}

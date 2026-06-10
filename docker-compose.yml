@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: family
+      POSTGRES_PASSWORD: family
+      POSTGRES_DB: family
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      # Published for local development (prisma migrate dev / studio from the host).
+      # Remove or firewall in production.
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U family -d family"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://family:family@db:5432/family?schema=public
+      # INSECURE default — override via env / .env file in any real deployment:
+      #   AUTH_SECRET="$(openssl rand -base64 32)" docker compose up -d
+      AUTH_SECRET: ${AUTH_SECRET:-insecure-dev-secret-change-me}
+      AUTH_TRUST_HOST: "true"
+    restart: unless-stopped
+
+volumes:
+  db-data:

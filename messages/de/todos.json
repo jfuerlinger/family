@@ -1,0 +1,60 @@
+{
+  "todos": {
+    "title": "Aufgaben",
+    "subtitle": "Eure gemeinsamen Listen – immer auf dem neuesten Stand.",
+    "lists": {
+      "newList": "Neue Liste",
+      "emptyTitle": "Noch keine Listen",
+      "emptyDescription": "Lege eure erste Liste an – zum Beispiel für den Einkauf, den Haushalt oder den nächsten Urlaub.",
+      "progress": "{done}/{total}",
+      "openCount": "{count, plural, one {# offene Aufgabe} other {# offene Aufgaben}}",
+      "allDone": "Alles erledigt",
+      "noItems": "Noch keine Aufgaben"
+    },
+    "listDialog": {
+      "createTitle": "Neue Liste",
+      "editTitle": "Liste bearbeiten",
+      "name": "Name",
+      "namePlaceholder": "z. B. Einkaufen",
+      "color": "Farbe",
+      "create": "Liste erstellen",
+      "save": "Speichern"
+    },
+    "list": {
+      "back": "Alle Listen",
+      "edit": "Liste bearbeiten",
+      "delete": "Liste löschen",
+      "deleteConfirm": "Liste „{name}“ mit allen Aufgaben löschen? Das kann nicht rückgängig gemacht werden."
+    },
+    "items": {
+      "quickAddPlaceholder": "Neue Aufgabe hinzufügen…",
+      "add": "Hinzufügen",
+      "completed": "Erledigt ({count})",
+      "emptyTitle": "Hier ist noch nichts zu tun",
+      "emptyDescription": "Füge oben deine erste Aufgabe hinzu.",
+      "allDoneTitle": "Alles geschafft!",
+      "allDoneDescription": "Alle Aufgaben in dieser Liste sind erledigt. Stark!",
+      "today": "Heute",
+      "markDone": "Als erledigt markieren",
+      "markOpen": "Als offen markieren"
+    },
+    "itemDialog": {
+      "title": "Aufgabe bearbeiten",
+      "titleLabel": "Titel",
+      "notes": "Notizen",
+      "notesPlaceholder": "Details, Links oder Hinweise…",
+      "dueDate": "Fällig am",
+      "priority": "Priorität",
+      "assignee": "Zuständig",
+      "unassigned": "Niemand",
+      "save": "Speichern",
+      "delete": "Aufgabe löschen",
+      "deleteConfirm": "Diese Aufgabe wirklich löschen?"
+    },
+    "priority": {
+      "LOW": "Niedrig",
+      "MEDIUM": "Mittel",
+      "HIGH": "Hoch"
+    }
+  }
+}

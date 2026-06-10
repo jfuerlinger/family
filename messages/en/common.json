@@ -1,0 +1,89 @@
+{
+  "app": {
+    "name": "FamilyHub",
+    "tagline": "Your family life. One place."
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "add": "Add",
+    "close": "Close",
+    "confirm": "Confirm",
+    "search": "Search",
+    "loading": "Loading…",
+    "back": "Back",
+    "today": "Today",
+    "optional": "optional",
+    "error": "Something went wrong. Please try again.",
+    "confirmDelete": "Really delete? This cannot be undone."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "todos": "Tasks",
+    "calendar": "Calendar",
+    "mindmaps": "Mind maps",
+    "settings": "Settings",
+    "logout": "Sign out"
+  },
+  "auth": {
+    "login": "Sign in",
+    "register": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "name": "Your name",
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in to your family",
+    "registerTitle": "Create account",
+    "registerSubtitle": "Get started with your family",
+    "noAccount": "No account yet?",
+    "hasAccount": "Already have an account?",
+    "invalidCredentials": "Email or password is incorrect.",
+    "emailTaken": "This email address is already registered.",
+    "passwordTooShort": "Password must be at least 8 characters long.",
+    "invalidInvite": "This invite code is invalid."
+  },
+  "onboarding": {
+    "title": "Almost there!",
+    "subtitle": "Create a new family or join an existing one.",
+    "createFamily": "Create a new family",
+    "familyName": "Family name",
+    "familyNamePlaceholder": "e.g. The Smiths",
+    "joinFamily": "Join a family",
+    "inviteCode": "Invite code",
+    "inviteCodePlaceholder": "Code from a family member",
+    "or": "or"
+  },
+  "dashboard": {
+    "greeting": "Hi, {name}!",
+    "subtitle": "Here's what's coming up.",
+    "openTodos": "Open tasks",
+    "todayEvents": "Events today",
+    "upcomingEvents": "Upcoming events",
+    "mindmaps": "Mind maps",
+    "members": "Members",
+    "noTodos": "No open tasks — nice!",
+    "noEvents": "No upcoming events.",
+    "viewAll": "View all",
+    "dueToday": "Due today",
+    "overdue": "Overdue"
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "language": "Language",
+    "german": "German",
+    "english": "English",
+    "family": "Family",
+    "inviteCode": "Invite code",
+    "inviteHint": "Share this code so others can join your family.",
+    "copied": "Copied!",
+    "copy": "Copy",
+    "membersTitle": "Members",
+    "admin": "Admin",
+    "member": "Member",
+    "saved": "Saved"
+  }
+}

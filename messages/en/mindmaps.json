@@ -1,0 +1,57 @@
+{
+  "mindmaps": {
+    "title": "Mind maps",
+    "subtitle": "Think through family decisions together.",
+    "new": "New mind map",
+    "newTitle": "Create mind map",
+    "titleLabel": "Title",
+    "titlePlaceholder": "e.g. Where should we go on vacation?",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "What is this mind map about?",
+    "optional": "optional",
+    "create": "Create",
+    "creating": "Creating…",
+    "cancel": "Cancel",
+    "save": "Save",
+    "rename": "Rename",
+    "renameTitle": "Edit mind map",
+    "delete": "Delete",
+    "deleteConfirm": "Really delete this mind map? This cannot be undone.",
+    "empty": {
+      "title": "No mind maps yet",
+      "description": "Create your first mind map to weigh ideas, pros and cons together."
+    },
+    "nodeCount": "{count, plural, one {# node} other {# nodes}}",
+    "updated": "Updated {time}",
+    "back": "All mind maps",
+    "saved": "Saved",
+    "saving": "Saving…",
+    "unsaved": "Unsaved changes",
+    "saveError": "Saving failed",
+    "saveNow": "Save",
+    "editor": {
+      "addChild": "Add",
+      "addTopic": "Add a topic",
+      "editNode": "Edit node",
+      "labelLabel": "Text",
+      "kindLabel": "Type",
+      "deleteNode": "Delete node",
+      "deleteNodeConfirm": "Really delete this node?",
+      "apply": "Apply"
+    },
+    "kinds": {
+      "topic": "Topic",
+      "idea": "Idea",
+      "pro": "Pro",
+      "con": "Con",
+      "question": "Question"
+    },
+    "defaultLabels": {
+      "topic": "New topic",
+      "idea": "New idea",
+      "pro": "Pro",
+      "con": "Con",
+      "question": "Question"
+    }
+  }
+}

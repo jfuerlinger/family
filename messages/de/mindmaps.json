@@ -1,0 +1,57 @@
+{
+  "mindmaps": {
+    "title": "Mindmaps",
+    "subtitle": "Denkt gemeinsam über Familienentscheidungen nach.",
+    "new": "Neue Mindmap",
+    "newTitle": "Mindmap erstellen",
+    "titleLabel": "Titel",
+    "titlePlaceholder": "z. B. Wohin in den Urlaub?",
+    "descriptionLabel": "Beschreibung",
+    "descriptionPlaceholder": "Worum geht es in dieser Mindmap?",
+    "optional": "optional",
+    "create": "Erstellen",
+    "creating": "Wird erstellt…",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "rename": "Umbenennen",
+    "renameTitle": "Mindmap bearbeiten",
+    "delete": "Löschen",
+    "deleteConfirm": "Diese Mindmap wirklich löschen? Das kann nicht rückgängig gemacht werden.",
+    "empty": {
+      "title": "Noch keine Mindmaps",
+      "description": "Erstelle deine erste Mindmap, um Ideen, Pro und Contra gemeinsam abzuwägen."
+    },
+    "nodeCount": "{count, plural, one {# Knoten} other {# Knoten}}",
+    "updated": "Aktualisiert {time}",
+    "back": "Alle Mindmaps",
+    "saved": "Gespeichert",
+    "saving": "Speichert…",
+    "unsaved": "Ungespeicherte Änderungen",
+    "saveError": "Speichern fehlgeschlagen",
+    "saveNow": "Speichern",
+    "editor": {
+      "addChild": "Hinzufügen",
+      "addTopic": "Thema hinzufügen",
+      "editNode": "Knoten bearbeiten",
+      "labelLabel": "Text",
+      "kindLabel": "Art",
+      "deleteNode": "Knoten löschen",
+      "deleteNodeConfirm": "Diesen Knoten wirklich löschen?",
+      "apply": "Übernehmen"
+    },
+    "kinds": {
+      "topic": "Thema",
+      "idea": "Idee",
+      "pro": "Pro",
+      "con": "Contra",
+      "question": "Frage"
+    },
+    "defaultLabels": {
+      "topic": "Neues Thema",
+      "idea": "Neue Idee",
+      "pro": "Pro",
+      "con": "Contra",
+      "question": "Frage"
+    }
+  }
+}

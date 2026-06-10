@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- FamilyHub app icon: indigo rounded square with an abstract family glyph -->
+  <rect width="512" height="512" rx="112" fill="#4f46e5"/>
+  <g fill="#ffffff">
+    <!-- parent left -->
+    <circle cx="172" cy="178" r="46"/>
+    <path d="M92 350c0-46 36-82 80-82s80 36 80 82v22a14 14 0 0 1-14 14H106a14 14 0 0 1-14-14z"/>
+    <!-- parent right -->
+    <circle cx="340" cy="178" r="46"/>
+    <path d="M260 350c0-46 36-82 80-82s80 36 80 82v22a14 14 0 0 1-14 14H274a14 14 0 0 1-14-14z"/>
+    <!-- bridge the seam between the two parent bodies -->
+    <rect x="236" y="296" width="40" height="70"/>
+    <!-- child in front, slightly overlapping -->
+    <circle cx="256" cy="280" r="38" stroke="#4f46e5" stroke-width="14"/>
+    <path d="M192 422c0-38 28-66 64-66s64 28 64 66v6a14 14 0 0 1-14 14H206a14 14 0 0 1-14-14z"
+          stroke="#4f46e5" stroke-width="14"/>
+  </g>
+</svg>

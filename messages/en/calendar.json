@@ -1,0 +1,34 @@
+{
+  "calendar": {
+    "today": "Today",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "moreEvents": "+{count} more",
+    "newEvent": "New event",
+    "editEvent": "Edit event",
+    "allDay": "All day",
+    "noEvents": "No events on this day",
+    "noEventsHint": "Tap the plus button to add an event for your family.",
+    "fields": {
+      "title": "Title",
+      "titlePlaceholder": "e.g. Dentist appointment",
+      "date": "Date",
+      "startTime": "Start",
+      "endTime": "End",
+      "location": "Location",
+      "locationPlaceholder": "e.g. Town hall",
+      "description": "Description",
+      "descriptionPlaceholder": "Notes, details, things to bring …",
+      "color": "Color"
+    },
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirmDelete": "Delete this event? This cannot be undone.",
+    "errors": {
+      "invalid": "Please check your input – something is missing or invalid.",
+      "invalidTimeRange": "The end time must be after the start time.",
+      "notFound": "This event no longer exists."
+    }
+  }
+}

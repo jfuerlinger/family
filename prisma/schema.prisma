@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum FamilyRole {
+  ADMIN
+  MEMBER
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  name         String
+  passwordHash String
+  locale       String     @default("de")
+  avatarColor  String     @default("#6366f1")
+  role         FamilyRole @default(MEMBER)
+  familyId     String?
+  family       Family?    @relation(fields: [familyId], references: [id], onDelete: SetNull)
+  assignedTodos TodoItem[] @relation("Assignee")
+  createdEvents CalendarEvent[] @relation("EventCreator")
+  createdMindmaps Mindmap[] @relation("MindmapCreator")
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Family {
+  id         String          @id @default(cuid())
+  name       String
+  inviteCode String          @unique @default(cuid())
+  members    User[]
+  todoLists  TodoList[]
+  events     CalendarEvent[]
+  mindmaps   Mindmap[]
+  createdAt  DateTime        @default(now())
+}
+
+model TodoList {
+  id        String     @id @default(cuid())
+  name      String
+  color     String     @default("#6366f1")
+  familyId  String
+  family    Family     @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  items     TodoItem[]
+  createdAt DateTime   @default(now())
+}
+
+model TodoItem {
+  id          String    @id @default(cuid())
+  title       String
+  notes       String?
+  done        Boolean   @default(false)
+  priority    Priority  @default(MEDIUM)
+  dueDate     DateTime?
+  listId      String
+  list        TodoList  @relation(fields: [listId], references: [id], onDelete: Cascade)
+  assigneeId  String?
+  assignee    User?     @relation("Assignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model CalendarEvent {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  location    String?
+  start       DateTime
+  end         DateTime?
+  allDay      Boolean   @default(false)
+  color       String    @default("#6366f1")
+  familyId    String
+  family      Family    @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  createdById String?
+  createdBy   User?     @relation("EventCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Mindmap {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  nodes       Json     @default("[]")
+  edges       Json     @default("[]")
+  familyId    String
+  family      Family   @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  createdById String?
+  createdBy   User?    @relation("MindmapCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

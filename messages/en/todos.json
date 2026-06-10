@@ -1,0 +1,60 @@
+{
+  "todos": {
+    "title": "Todos",
+    "subtitle": "Your shared lists – always up to date.",
+    "lists": {
+      "newList": "New list",
+      "emptyTitle": "No lists yet",
+      "emptyDescription": "Create your first list – for groceries, chores, or your next holiday.",
+      "progress": "{done}/{total}",
+      "openCount": "{count, plural, one {# open task} other {# open tasks}}",
+      "allDone": "All done",
+      "noItems": "No tasks yet"
+    },
+    "listDialog": {
+      "createTitle": "New list",
+      "editTitle": "Edit list",
+      "name": "Name",
+      "namePlaceholder": "e.g. Groceries",
+      "color": "Color",
+      "create": "Create list",
+      "save": "Save"
+    },
+    "list": {
+      "back": "All lists",
+      "edit": "Edit list",
+      "delete": "Delete list",
+      "deleteConfirm": "Delete the list “{name}” and all of its tasks? This cannot be undone."
+    },
+    "items": {
+      "quickAddPlaceholder": "Add a new task…",
+      "add": "Add",
+      "completed": "Completed ({count})",
+      "emptyTitle": "Nothing to do here yet",
+      "emptyDescription": "Add your first task above.",
+      "allDoneTitle": "All done!",
+      "allDoneDescription": "Every task in this list is completed. Nice work!",
+      "today": "Today",
+      "markDone": "Mark as done",
+      "markOpen": "Mark as open"
+    },
+    "itemDialog": {
+      "title": "Edit task",
+      "titleLabel": "Title",
+      "notes": "Notes",
+      "notesPlaceholder": "Details, links, or hints…",
+      "dueDate": "Due date",
+      "priority": "Priority",
+      "assignee": "Assigned to",
+      "unassigned": "Nobody",
+      "save": "Save",
+      "delete": "Delete task",
+      "deleteConfirm": "Really delete this task?"
+    },
+    "priority": {
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HIGH": "High"
+    }
+  }
+}
