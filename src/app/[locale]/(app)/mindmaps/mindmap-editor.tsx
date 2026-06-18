@@ -89,6 +89,7 @@ export function MindmapEditor({ id, title: initialTitle, initialNodes, initialEd
   const [editing, setEditing] = useState<EditingNode | null>(null);
   const [pendingDeleteNodeId, setPendingDeleteNodeId] = useState<string | null>(null);
   const [layoutDirection, setLayoutDirection] = useState<LayoutDirection>('vertical');
+  const [showLayoutMenu, setShowLayoutMenu] = useState(false);
 
   const lastSavedRef = useRef(JSON.stringify(serialize(initialNodes, initialEdges)));
   const lastTitleRef = useRef(initialTitle);
@@ -212,11 +213,6 @@ export function MindmapEditor({ id, title: initialTitle, initialNodes, initialEd
     void renameMindmap(id, value);
   }, [id, title]);
 
-  const applyLayout = useCallback(() => {
-    const layoutedNodes = applyAutoLayout(nodes, edges, layoutDirection);
-    setNodes(layoutedNodes);
-  }, [nodes, edges, layoutDirection, setNodes]);
-
   return (
     <div className="space-y-3">
       {/* Top bar */}
@@ -252,28 +248,6 @@ export function MindmapEditor({ id, title: initialTitle, initialNodes, initialEd
         </Button>
       </div>
 
-      {/* Layout control bar */}
-      <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white p-3">
-        <LayoutGrid className="h-4 w-4 text-slate-500" />
-        <span className="text-sm font-medium text-slate-600">{t('editor.autoLayout')}</span>
-        <Select
-          value={layoutDirection}
-          onChange={(event) => setLayoutDirection(event.target.value as LayoutDirection)}
-          className="h-9"
-        >
-          <option value="vertical">{t('editor.layoutVertical')}</option>
-          <option value="horizontal">{t('editor.layoutHorizontal')}</option>
-        </Select>
-        <Button
-          size="sm"
-          onClick={applyLayout}
-          disabled={nodes.length === 0}
-          title={t('editor.autoLayoutDesc')}
-        >
-          {t('editor.autoLayout')}
-        </Button>
-      </div>
-
       {/* Canvas */}
       <Card className="relative h-[calc(100dvh-12rem)] overflow-hidden md:h-[calc(100dvh-8rem)]">
         <ReactFlow
@@ -296,6 +270,55 @@ export function MindmapEditor({ id, title: initialTitle, initialNodes, initialEd
           <Controls showInteractive={false} />
           <MiniMap pannable zoomable className="hidden! md:block!" />
         </ReactFlow>
+
+        {/* Layout menu - compact in top right */}
+        {nodes.length > 0 && (
+          <div className="absolute top-4 right-4 z-20">
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setShowLayoutMenu(!showLayoutMenu)}
+                title={t('editor.autoLayoutDesc')}
+                className="flex h-10 w-10 items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-600 shadow-sm transition-colors hover:bg-slate-50 active:bg-slate-100"
+              >
+                <LayoutGrid className="h-5 w-5" />
+              </button>
+              {showLayoutMenu && (
+                <div className="absolute right-0 mt-2 w-48 rounded-lg border border-slate-200 bg-white shadow-lg">
+                  <div className="p-3 space-y-2">
+                    <div className="text-xs font-medium text-slate-500 uppercase tracking-wide px-2">
+                      {t('editor.autoLayout')}
+                    </div>
+                    <div className="space-y-1.5">
+                      {['vertical', 'horizontal'].map((direction) => (
+                        <button
+                          key={direction}
+                          type="button"
+                          onClick={() => {
+                            setLayoutDirection(direction as LayoutDirection);
+                            const layoutedNodes = applyAutoLayout(nodes, edges, direction as LayoutDirection);
+                            setNodes(layoutedNodes);
+                            setShowLayoutMenu(false);
+                          }}
+                          className={cn(
+                            'w-full text-left px-3 py-2 rounded-md text-sm transition-colors',
+                            layoutDirection === direction
+                              ? 'bg-primary-100 text-primary-700 font-medium'
+                              : 'text-slate-700 hover:bg-slate-100',
+                          )}
+                        >
+                          {direction === 'vertical'
+                            ? t('editor.layoutVertical')
+                            : t('editor.layoutHorizontal')}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Empty canvas: offer a first topic node */}
         {nodes.length === 0 && (
