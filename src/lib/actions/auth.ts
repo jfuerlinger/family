@@ -12,6 +12,11 @@ import { MEMBER_COLORS } from '@/lib/utils';
 
 export type AuthFormState = { error?: string } | undefined;
 
+const TEST_LOGIN_SHORTCUT_ENABLED =
+  process.env.TEST_LOGIN_SHORTCUT === 'true' || process.env.TEST_LOGIN_SHORTCUT === '1';
+const TEST_LOGIN_EMAIL = 'anna@example.com';
+const TEST_LOGIN_PASSWORD = 'password123';
+
 const registerSchema = z.object({
   name: z.string().trim().min(1).max(100),
   email: z.string().trim().toLowerCase().email(),
@@ -56,6 +61,29 @@ export async function loginUser(
     await signIn('credentials', {
       email: formData.get('email'),
       password: formData.get('password'),
+      redirect: false,
+    });
+  } catch (error) {
+    if (error instanceof AuthError) return { error: 'invalidCredentials' };
+    throw error;
+  }
+  redirect(`/${locale}/dashboard`);
+}
+
+export async function loginWithTestUserShortcut(
+  _prev: AuthFormState,
+  _formData: FormData,
+): Promise<AuthFormState> {
+  void _prev;
+  void _formData;
+
+  if (!TEST_LOGIN_SHORTCUT_ENABLED) return { error: 'invalidCredentials' };
+
+  const locale = await getLocale();
+  try {
+    await signIn('credentials', {
+      email: TEST_LOGIN_EMAIL,
+      password: TEST_LOGIN_PASSWORD,
       redirect: false,
     });
   } catch (error) {
