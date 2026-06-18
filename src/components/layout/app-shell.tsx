@@ -39,9 +39,9 @@ export function AppShell({ user, familyName, children }: AppShellProps) {
   return (
     <div className="flex flex-1">
       {/* Desktop sidebar */}
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-slate-200/70 bg-white md:flex">
+      <aside className="glass fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-white/50 md:flex">
         <div className="flex items-center gap-3 px-5 py-5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-600">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 shadow-sm shadow-primary-600/30">
             <Users className="h-5 w-5 text-white" />
           </div>
           <div className="min-w-0">
@@ -57,8 +57,8 @@ export function AppShell({ user, familyName, children }: AppShellProps) {
               className={cn(
                 'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors',
                 isActive(href)
-                  ? 'bg-primary-50 text-primary-700'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900',
+                  ? 'bg-primary-600/10 text-primary-700 shadow-sm shadow-primary-600/10 ring-1 ring-inset ring-primary-600/10'
+                  : 'text-slate-600 hover:bg-slate-500/10 hover:text-slate-900',
               )}
             >
               <Icon className="h-5 w-5" />
@@ -86,9 +86,9 @@ export function AppShell({ user, familyName, children }: AppShellProps) {
       </aside>
 
       {/* Mobile top bar */}
-      <header className="fixed inset-x-0 top-0 z-30 flex items-center justify-between border-b border-slate-200/70 bg-white/90 px-4 py-3 pt-safe backdrop-blur md:hidden">
+      <header className="glass fixed inset-x-0 top-0 z-30 flex items-center justify-between border-b border-white/50 px-4 py-3 pt-safe md:hidden">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 shadow-sm shadow-primary-600/30">
             <Users className="h-4 w-4 text-white" />
           </div>
           <span className="text-sm font-bold text-slate-900">{familyName}</span>
@@ -102,14 +102,14 @@ export function AppShell({ user, familyName, children }: AppShellProps) {
       </main>
 
       {/* Mobile bottom navigation */}
-      <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-slate-200/70 bg-white/95 pb-safe backdrop-blur md:hidden">
+      <nav className="glass fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-white/50 pb-safe md:hidden">
         {NAV_ITEMS.map(({ href, key, icon: Icon }) => (
           <Link
             key={href}
             href={href}
             className={cn(
-              'flex flex-col items-center gap-1 py-2.5 text-[10px] font-medium',
-              isActive(href) ? 'text-primary-600' : 'text-slate-400',
+              'flex flex-col items-center gap-1 py-2.5 text-[10px] font-medium transition-colors',
+              isActive(href) ? 'text-primary-600' : 'text-slate-400 hover:text-slate-600',
             )}
           >
             <Icon className="h-5 w-5" />

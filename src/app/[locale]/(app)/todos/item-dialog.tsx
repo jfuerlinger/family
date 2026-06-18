@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { format } from 'date-fns';
 import { Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Dialog } from '@/components/ui/dialog';
 import { Input, Label, Select, Textarea } from '@/components/ui/input';
 import { updateItem, deleteItem } from '@/lib/actions/todos';
@@ -25,6 +26,7 @@ export function ItemDialog({ item, members, onClose }: ItemDialogProps) {
   const [dueDate, setDueDate] = useState(item.dueDate ? format(item.dueDate, 'yyyy-MM-dd') : '');
   const [assigneeId, setAssigneeId] = useState(item.assignee?.id ?? '');
   const [priority, setPriority] = useState<TodoPriority>(item.priority);
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [pending, startTransition] = useTransition();
 
   const handleSave = (e: React.FormEvent) => {
@@ -44,7 +46,11 @@ export function ItemDialog({ item, members, onClose }: ItemDialogProps) {
   };
 
   const handleDelete = () => {
-    if (!confirm(t('itemDialog.deleteConfirm'))) return;
+    setConfirmDeleteOpen(true);
+  };
+
+  const confirmDelete = () => {
+    setConfirmDeleteOpen(false);
     startTransition(async () => {
       await deleteItem(item.id);
       onClose();
@@ -52,8 +58,9 @@ export function ItemDialog({ item, members, onClose }: ItemDialogProps) {
   };
 
   return (
-    <Dialog open onClose={onClose} title={t('itemDialog.title')}>
-      <form onSubmit={handleSave} className="space-y-4">
+    <>
+      <Dialog open onClose={onClose} title={t('itemDialog.title')}>
+        <form onSubmit={handleSave} className="space-y-4">
         <div>
           <Label htmlFor="item-title">{t('itemDialog.titleLabel')}</Label>
           <Input
@@ -118,23 +125,33 @@ export function ItemDialog({ item, members, onClose }: ItemDialogProps) {
           </Select>
         </div>
 
-        <div className="flex gap-2 pt-1">
-          <Button
-            type="button"
-            variant="outline"
-            size="lg"
-            onClick={handleDelete}
-            disabled={pending}
-            aria-label={t('itemDialog.delete')}
-            className="shrink-0 px-4 text-red-600 hover:bg-red-50"
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
-          <Button type="submit" size="lg" className="flex-1" disabled={pending || !title.trim()}>
-            {t('itemDialog.save')}
-          </Button>
-        </div>
-      </form>
-    </Dialog>
+          <div className="flex gap-2 pt-1">
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              onClick={handleDelete}
+              disabled={pending}
+              className="shrink-0 px-4 text-red-600 hover:bg-red-50"
+            >
+              <Trash2 className="h-4 w-4" />
+              {t('itemDialog.delete')}
+            </Button>
+            <Button type="submit" size="lg" className="flex-1" disabled={pending || !title.trim()}>
+              {t('itemDialog.save')}
+            </Button>
+          </div>
+        </form>
+      </Dialog>
+      <ConfirmDialog
+        open={confirmDeleteOpen}
+        onClose={() => setConfirmDeleteOpen(false)}
+        onConfirm={confirmDelete}
+        title={t('itemDialog.delete')}
+        description={t('itemDialog.deleteConfirm')}
+        confirmLabel={t('itemDialog.delete')}
+        pending={pending}
+      />
+    </>
   );
 }

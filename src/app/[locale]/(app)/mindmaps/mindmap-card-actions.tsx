@@ -4,6 +4,7 @@ import { useState, useTransition } from 'react';
 import { Pencil, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Dialog } from '@/components/ui/dialog';
 import { Input, Label, Textarea } from '@/components/ui/input';
 import { deleteMindmap, renameMindmap } from '@/lib/actions/mindmaps';
@@ -17,6 +18,7 @@ interface MindmapCardActionsProps {
 export function MindmapCardActions({ id, title, description }: MindmapCardActionsProps) {
   const t = useTranslations('mindmaps');
   const [open, setOpen] = useState(false);
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [pending, startTransition] = useTransition();
 
   const handleRename = (formData: FormData) => {
@@ -30,7 +32,11 @@ export function MindmapCardActions({ id, title, description }: MindmapCardAction
   };
 
   const handleDelete = () => {
-    if (!confirm(t('deleteConfirm'))) return;
+    setConfirmDeleteOpen(true);
+  };
+
+  const confirmDelete = () => {
+    setConfirmDeleteOpen(false);
     startTransition(async () => {
       await deleteMindmap(id);
     });
@@ -94,6 +100,16 @@ export function MindmapCardActions({ id, title, description }: MindmapCardAction
           </div>
         </form>
       </Dialog>
+      <ConfirmDialog
+        open={confirmDeleteOpen}
+        onClose={() => setConfirmDeleteOpen(false)}
+        onConfirm={confirmDelete}
+        title={t('delete')}
+        description={t('deleteConfirm')}
+        confirmLabel={t('delete')}
+        cancelLabel={t('cancel')}
+        pending={pending}
+      />
     </div>
   );
 }

@@ -6,6 +6,16 @@ Thanks for helping make FamilyHub better! This guide covers code style, the feat
 
 Follow [getting-started.md](getting-started.md). Before pushing, make sure `npm run lint` and `npm run build` pass.
 
+## Dependencies & the lockfile
+
+The Docker image builds with **`npm ci`** (see `Dockerfile`), which fails unless `package.json` and `package-lock.json` are perfectly in sync. A plain `npm install` on macOS can leave the lockfile missing Linux/musl-only optional binaries — e.g. `unrs-resolver` (pulled in by `eslint-config-next`) and its `@unrs/resolver-binding-wasm32-wasi` → `@emnapi/*` fallbacks — which then breaks `docker compose up --build` with `EUSAGE ... can only install packages when your package.json and package-lock.json are in sync` even though local installs work.
+
+After changing dependencies:
+
+1. Regenerate the lockfile cleanly: `rm -rf node_modules package-lock.json && npm install`.
+2. Verify the Docker build path will succeed: `npm ci --dry-run` must exit 0 (no "Missing/Invalid ... from lock file").
+3. Commit the updated `package-lock.json` together with the `package.json` change.
+
 ## Code style
 
 - **TypeScript everywhere**, strict mode. No `any` unless there is truly no alternative (and then with a comment).
@@ -40,6 +50,7 @@ Features follow a consistent **page + actions + messages** pattern. To add a fea
 ### PR checklist
 
 - [ ] `npm run lint` and `npm run build` pass
+- [ ] If dependencies changed: `package-lock.json` regenerated and `npm ci --dry-run` exits 0 (keeps the Docker build working)
 - [ ] All new queries/mutations are scoped to the caller's family
 - [ ] All inputs validated with zod; no client-provided `familyId`/foreign IDs trusted
 - [ ] All user-facing strings exist in **both** `messages/de/` and `messages/en/` (German du-Form)

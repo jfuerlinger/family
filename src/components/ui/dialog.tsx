@@ -33,7 +33,7 @@ export function Dialog({ open, onClose, title, children, className }: DialogProp
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-slate-900/40 backdrop-blur-sm sm:items-center sm:p-4"
+      className="animate-fade-in fixed inset-0 z-50 flex items-end justify-center bg-slate-900/40 backdrop-blur-sm sm:items-center sm:p-4"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -43,7 +43,7 @@ export function Dialog({ open, onClose, title, children, className }: DialogProp
         role="dialog"
         aria-modal="true"
         className={cn(
-          'flex max-h-[92dvh] w-full flex-col rounded-t-2xl bg-white shadow-xl',
+          'animate-pop-in flex max-h-[92dvh] w-full flex-col rounded-t-2xl border border-white/60 bg-white shadow-2xl shadow-slate-900/10',
           'sm:max-w-lg sm:rounded-2xl',
           className,
         )}

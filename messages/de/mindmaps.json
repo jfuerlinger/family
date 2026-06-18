@@ -37,7 +37,11 @@
       "kindLabel": "Art",
       "deleteNode": "Knoten löschen",
       "deleteNodeConfirm": "Diesen Knoten wirklich löschen?",
-      "apply": "Übernehmen"
+      "apply": "Übernehmen",
+      "autoLayout": "Auto-Layout",
+      "autoLayoutDesc": "Knoten automatisch hierarchisch anordnen",
+      "layoutVertical": "Vertikal",
+      "layoutHorizontal": "Horizontal"
     },
     "kinds": {
       "topic": "Thema",

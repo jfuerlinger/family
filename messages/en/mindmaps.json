@@ -37,7 +37,11 @@
       "kindLabel": "Type",
       "deleteNode": "Delete node",
       "deleteNodeConfirm": "Really delete this node?",
-      "apply": "Apply"
+      "apply": "Apply",
+      "autoLayout": "Auto-Layout",
+      "autoLayoutDesc": "Arrange nodes automatically in a hierarchy",
+      "layoutVertical": "Vertical",
+      "layoutHorizontal": "Horizontal"
     },
     "kinds": {
       "topic": "Topic",

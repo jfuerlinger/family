@@ -20,6 +20,7 @@ import {
   ArrowLeft,
   Check,
   HelpCircle,
+  LayoutGrid,
   Lightbulb,
   Loader2,
   Pencil,
@@ -33,9 +34,11 @@ import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Dialog } from '@/components/ui/dialog';
 import { Input, Label, Select } from '@/components/ui/input';
 import { renameMindmap, saveMindmap } from '@/lib/actions/mindmaps';
+import { applyAutoLayout, type LayoutDirection } from '@/lib/mindmap-layout';
 import { MindmapNodeView, NODE_KINDS, type MindmapNode, type NodeKind } from './mindmap-node';
 
 const nodeTypes = { mindmap: MindmapNodeView };
@@ -84,11 +87,16 @@ export function MindmapEditor({ id, title: initialTitle, initialNodes, initialEd
   const [title, setTitle] = useState(initialTitle);
   const [saveState, setSaveState] = useState<SaveState>('saved');
   const [editing, setEditing] = useState<EditingNode | null>(null);
+  const [pendingDeleteNodeId, setPendingDeleteNodeId] = useState<string | null>(null);
+  const [layoutDirection, setLayoutDirection] = useState<LayoutDirection>('vertical');
 
   const lastSavedRef = useRef(JSON.stringify(serialize(initialNodes, initialEdges)));
   const lastTitleRef = useRef(initialTitle);
 
-  const selectedNode = useMemo(() => nodes.find((node) => node.selected), [nodes]);
+  const selectedNode = useMemo(
+    () => nodes.find((node) => node.selected) ?? nodes.find((node) => node.id === 'root') ?? nodes[0],
+    [nodes],
+  );
 
   const persist = useCallback(
     async (currentNodes: MindmapNode[], currentEdges: Edge[]) => {
@@ -134,7 +142,7 @@ export function MindmapEditor({ id, title: initialTitle, initialNodes, initialEd
 
   const addChild = useCallback(
     (kind: NodeKind) => {
-      const parent = nodes.find((node) => node.selected);
+      const parent = selectedNode;
       if (!parent) return;
       const childCount = edges.filter((edge) => edge.source === parent.id).length;
       const childId = newId();
@@ -153,7 +161,7 @@ export function MindmapEditor({ id, title: initialTitle, initialNodes, initialEd
       setEdges((current) => [...current, { id: `e-${parent.id}-${childId}`, source: parent.id, target: childId }]);
       setEditing({ id: childId, label, kind });
     },
-    [nodes, edges, setNodes, setEdges, t],
+    [selectedNode, edges, setNodes, setEdges, t],
   );
 
   const addTopic = useCallback(() => {
@@ -181,14 +189,16 @@ export function MindmapEditor({ id, title: initialTitle, initialNodes, initialEd
     setEditing(null);
   }, [editing, setNodes]);
 
-  const deleteNode = useCallback(
+  const requestDeleteNode = useCallback((nodeId: string) => setPendingDeleteNodeId(nodeId), []);
+
+  const confirmDeleteNode = useCallback(
     (nodeId: string) => {
-      if (!confirm(t('editor.deleteNodeConfirm'))) return;
       setNodes((current) => current.filter((node) => node.id !== nodeId));
       setEdges((current) => current.filter((edge) => edge.source !== nodeId && edge.target !== nodeId));
       setEditing(null);
+      setPendingDeleteNodeId(null);
     },
-    [setNodes, setEdges, t],
+    [setNodes, setEdges],
   );
 
   const commitTitle = useCallback(() => {
@@ -201,6 +211,11 @@ export function MindmapEditor({ id, title: initialTitle, initialNodes, initialEd
     lastTitleRef.current = value;
     void renameMindmap(id, value);
   }, [id, title]);
+
+  const applyLayout = useCallback(() => {
+    const layoutedNodes = applyAutoLayout(nodes, edges, layoutDirection);
+    setNodes(layoutedNodes);
+  }, [nodes, edges, layoutDirection, setNodes]);
 
   return (
     <div className="space-y-3">
@@ -234,6 +249,28 @@ export function MindmapEditor({ id, title: initialTitle, initialNodes, initialEd
           disabled={saveState === 'saving' || saveState === 'saved'}
         >
           {t('saveNow')}
+        </Button>
+      </div>
+
+      {/* Layout control bar */}
+      <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white p-3">
+        <LayoutGrid className="h-4 w-4 text-slate-500" />
+        <span className="text-sm font-medium text-slate-600">{t('editor.autoLayout')}</span>
+        <Select
+          value={layoutDirection}
+          onChange={(event) => setLayoutDirection(event.target.value as LayoutDirection)}
+          className="h-9"
+        >
+          <option value="vertical">{t('editor.layoutVertical')}</option>
+          <option value="horizontal">{t('editor.layoutHorizontal')}</option>
+        </Select>
+        <Button
+          size="sm"
+          onClick={applyLayout}
+          disabled={nodes.length === 0}
+          title={t('editor.autoLayoutDesc')}
+        >
+          {t('editor.autoLayout')}
         </Button>
       </div>
 
@@ -300,7 +337,7 @@ export function MindmapEditor({ id, title: initialTitle, initialNodes, initialEd
             </button>
             <button
               type="button"
-              onClick={() => deleteNode(selectedNode.id)}
+              onClick={() => requestDeleteNode(selectedNode.id)}
               aria-label={t('editor.deleteNode')}
               title={t('editor.deleteNode')}
               className="flex h-11 w-11 items-center justify-center rounded-xl text-red-500 transition-colors hover:bg-red-50 active:bg-red-100"
@@ -351,7 +388,7 @@ export function MindmapEditor({ id, title: initialTitle, initialNodes, initialEd
               <Button
                 variant="ghost"
                 className="text-red-600 hover:bg-red-50 hover:text-red-700"
-                onClick={() => deleteNode(editing.id)}
+                onClick={() => requestDeleteNode(editing.id)}
               >
                 <Trash2 className="h-4 w-4" />
                 {t('editor.deleteNode')}
@@ -366,6 +403,18 @@ export function MindmapEditor({ id, title: initialTitle, initialNodes, initialEd
           </form>
         )}
       </Dialog>
+      <ConfirmDialog
+        open={pendingDeleteNodeId !== null}
+        onClose={() => setPendingDeleteNodeId(null)}
+        onConfirm={() => {
+          if (!pendingDeleteNodeId) return;
+          confirmDeleteNode(pendingDeleteNodeId);
+        }}
+        title={t('editor.deleteNode')}
+        description={t('editor.deleteNodeConfirm')}
+        confirmLabel={t('editor.deleteNode')}
+        cancelLabel={t('cancel')}
+      />
     </div>
   );
 }

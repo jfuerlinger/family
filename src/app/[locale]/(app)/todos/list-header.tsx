@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { ArrowLeft, Pencil, Trash2 } from 'lucide-react';
 import { Link, useRouter } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Dialog } from '@/components/ui/dialog';
 import { updateList, deleteList } from '@/lib/actions/todos';
 import { ListForm } from './list-form';
@@ -18,10 +19,15 @@ export function ListHeader({ list, openCount }: ListHeaderProps) {
   const t = useTranslations('todos');
   const router = useRouter();
   const [editing, setEditing] = useState(false);
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [, startTransition] = useTransition();
 
   const handleDelete = () => {
-    if (!confirm(t('list.deleteConfirm', { name: list.name }))) return;
+    setConfirmDeleteOpen(true);
+  };
+
+  const confirmDelete = () => {
+    setConfirmDeleteOpen(false);
     startTransition(async () => {
       await deleteList(list.id);
       router.push('/todos');
@@ -82,6 +88,14 @@ export function ListHeader({ list, openCount }: ListHeaderProps) {
           }}
         />
       </Dialog>
+      <ConfirmDialog
+        open={confirmDeleteOpen}
+        onClose={() => setConfirmDeleteOpen(false)}
+        onConfirm={confirmDelete}
+        title={t('list.delete')}
+        description={t('list.deleteConfirm', { name: list.name })}
+        confirmLabel={t('list.delete')}
+      />
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { format as formatDate } from 'date-fns';
 import { Check, Trash2 } from 'lucide-react';
 import { Dialog } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Input, Label, Textarea } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { createEvent, updateEvent, deleteEvent } from '@/lib/actions/calendar';
@@ -35,6 +36,7 @@ export function EventDialog({ open, onClose, event, defaultDate }: EventDialogPr
   const [allDay, setAllDay] = useState(event?.allDay ?? false);
   const [color, setColor] = useState(event?.color ?? EVENT_COLORS[0]);
   const [error, setError] = useState<string | null>(null);
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [isDeleting, startDelete] = useTransition();
 
   const isEdit = event !== null;
@@ -51,7 +53,12 @@ export function EventDialog({ open, onClose, event, defaultDate }: EventDialogPr
 
   const handleDelete = () => {
     if (!event) return;
-    if (!confirm(t('confirmDelete'))) return;
+    setConfirmDeleteOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (!event) return;
+    setConfirmDeleteOpen(false);
     setError(null);
     startDelete(async () => {
       const result = await deleteEvent(event.id);
@@ -64,10 +71,11 @@ export function EventDialog({ open, onClose, event, defaultDate }: EventDialogPr
   };
 
   return (
-    <Dialog open={open} onClose={onClose} title={isEdit ? t('editEvent') : t('newEvent')}>
-      <form action={handleSubmit} className="space-y-4">
-        {isEdit && <input type="hidden" name="id" value={event.id} />}
-        <input type="hidden" name="color" value={color} />
+    <>
+      <Dialog open={open} onClose={onClose} title={isEdit ? t('editEvent') : t('newEvent')}>
+        <form action={handleSubmit} className="space-y-4">
+          {isEdit && <input type="hidden" name="id" value={event.id} />}
+          <input type="hidden" name="color" value={color} />
 
         <div>
           <Label htmlFor="event-title">{t('fields.title')}</Label>
@@ -185,25 +193,37 @@ export function EventDialog({ open, onClose, event, defaultDate }: EventDialogPr
           </p>
         )}
 
-        <div className="flex items-center gap-2 pt-1">
-          {isEdit && (
-            <Button
-              type="button"
-              variant="danger"
-              onClick={handleDelete}
-              disabled={isDeleting}
-              className="mr-auto"
-            >
-              <Trash2 className="h-4 w-4" />
-              {t('delete')}
+          <div className="flex items-center gap-2 pt-1">
+            {isEdit && (
+              <Button
+                type="button"
+                variant="danger"
+                onClick={handleDelete}
+                disabled={isDeleting}
+                className="mr-auto"
+              >
+                <Trash2 className="h-4 w-4" />
+                {t('delete')}
+              </Button>
+            )}
+            <Button type="button" variant="ghost" onClick={onClose} className="ml-auto">
+              {t('cancel')}
             </Button>
-          )}
-          <Button type="button" variant="ghost" onClick={onClose} className="ml-auto">
-            {t('cancel')}
-          </Button>
-          <SubmitButton label={t('save')} />
-        </div>
-      </form>
-    </Dialog>
+            <SubmitButton label={t('save')} />
+          </div>
+        </form>
+      </Dialog>
+      <ConfirmDialog
+        open={confirmDeleteOpen}
+        onClose={() => setConfirmDeleteOpen(false)}
+        onConfirm={confirmDelete}
+        title={t('delete')}
+        description={t('confirmDelete')}
+        confirmLabel={t('delete')}
+        cancelLabel={t('cancel')}
+        confirmVariant="danger"
+        pending={isDeleting}
+      />
+    </>
   );
 }
