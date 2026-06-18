@@ -38,26 +38,27 @@ function calculateTreeLayout(
 
     if (children.length === 0) return;
 
-    const childSpacing = direction === 'vertical' ? 80 : 200;
-    const verticalGap = 120;
-
     if (direction === 'vertical') {
       // Children spread horizontally, increase depth vertically
+      const childSpacing = 100; // horizontal spacing between siblings
+      const levelGap = 140; // vertical distance to children
       const totalWidth = (children.length - 1) * childSpacing;
       const startX = x - totalWidth / 2;
 
       children.forEach((childId, index) => {
         const childX = startX + index * childSpacing;
-        const childY = y + verticalGap;
+        const childY = y + levelGap;
         traverse(childId, childX, childY, depth + 1);
       });
     } else {
-      // Horizontal layout: children spread vertically
+      // Horizontal layout: children spread vertically, depth goes to the right
+      const childSpacing = 100; // vertical spacing between siblings
+      const levelGap = 280; // horizontal distance to children (wide, for node width)
       const totalHeight = (children.length - 1) * childSpacing;
       const startY = y - totalHeight / 2;
 
       children.forEach((childId, index) => {
-        const childX = x + verticalGap;
+        const childX = x + levelGap;
         const childY = startY + index * childSpacing;
         traverse(childId, childX, childY, depth + 1);
       });
