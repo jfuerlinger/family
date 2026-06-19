@@ -40,6 +40,7 @@
     "registerSubtitle": "Get started with your family",
     "noAccount": "No account yet?",
     "hasAccount": "Already have an account?",
+    "loginWithTestUser": "Quick sign in with test user",
     "invalidCredentials": "Email or password is incorrect.",
     "emailTaken": "This email address is already registered.",
     "passwordTooShort": "Password must be at least 8 characters long.",
