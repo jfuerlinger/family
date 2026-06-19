@@ -75,7 +75,7 @@ This guide takes you from a fresh clone to a running FamilyHub instance on your 
 | `DATABASE_URL` | yes | `postgresql://family:family@localhost:5432/family?schema=public` | PostgreSQL connection string. Used by both the app (via the `@prisma/adapter-pg` driver adapter) and the Prisma CLI (via `prisma.config.ts`). |
 | `AUTH_SECRET` | yes | output of `openssl rand -base64 32` | Secret used by NextAuth to sign/encrypt JWT session tokens. **Never use the example value in production.** |
 | `AUTH_TRUST_HOST` | yes (in Docker / behind a proxy) | `true` | Tells NextAuth to trust the `Host` header. Required when running behind a reverse proxy or in a container. |
-| `TEST_LOGIN_SHORTCUT` | no | `true` | Enables an extra login button on `/login` that signs in with the seeded demo user (`anna@example.com` / `password123`) without manual input. Keep unset outside test/dev environments. |
+| `TEST_LOGIN_SHORTCUT` | no | `true` (or `1`) | Enables an extra login button on `/login` that signs in with the seeded demo user (`anna@example.com` / `password123`) without manual input. Keep unset outside test/dev environments. |
 | `CAP_SERVER_URL` | iOS builds only | `https://family.example.com` | URL of the hosted instance the Capacitor iOS app should load. See [ios-app.md](ios-app.md). |
 
 ## Common commands

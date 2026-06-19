@@ -60,7 +60,9 @@ export function LoginForm({ enableTestLoginShortcut }: LoginFormProps) {
             </Button>
           </form>
         )}
-        {shortcutState?.error && <p className="mt-2 text-sm text-red-600">{t(shortcutState.error)}</p>}
+        {shortcutState?.error && (
+          <p className="mt-2 text-sm text-red-600">{t(shortcutState.error)}</p>
+        )}
         <p className="mt-5 text-center text-sm text-slate-500">
           {t('noAccount')}{' '}
           <Link href="/register" className="font-medium text-primary-600 hover:underline">
