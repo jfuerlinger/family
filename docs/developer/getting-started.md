@@ -21,20 +21,32 @@ This guide takes you from a fresh clone to a running FamilyHub instance on your 
    ```bash
    git clone https://github.com/your-org/familyhub.git
    cd familyhub
-   npm install
+   npm install   # also installs aspire-apphost devDependencies automatically
    ```
 
-2. **Update Aspire CLI**
+2. **Set required environment variables**
+
+   Create a `.env` file in the project root (it is gitignored):
+
+   ```bash
+   echo "AUTH_SECRET=$(openssl rand -base64 32)" >> .env
+   ```
+
+   The Aspire AppHost reads `AUTH_SECRET` from the environment and forwards it to the app container. Without it, a dev-only insecure default is used with a console warning.
+
+3. **Update Aspire CLI**
 
    ```bash
    aspire update --self --yes --non-interactive --channel stable
    ```
 
-3. **Start the full stack through Aspire**
+4. **Start the full stack through Aspire**
 
    ```bash
    npm run aspire:start
    ```
+
+   On first run, the Aspire CLI auto-generates the `.aspire/` tooling directory — no manual setup needed.
 
    This starts the AppHost (`aspire-apphost/apphost.mts`), which launches:
 
@@ -43,7 +55,7 @@ This guide takes you from a fresh clone to a running FamilyHub instance on your 
    - Startup ordering (`app` waits for `db`)
    - `prisma migrate deploy` automatically on app container start (via `docker-entrypoint.sh`)
 
-4. **(Optional) Seed demo data**
+5. **(Optional) Seed demo data**
 
    ```bash
    npm run db:seed

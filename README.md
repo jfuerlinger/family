@@ -31,13 +31,18 @@
 
 ## 🚀 Quickstart (Aspire)
 
+**Prerequisites:** [Node.js 20+](https://nodejs.org/), [Docker](https://docs.docker.com/get-docker/), [Aspire CLI](https://aspire.dev/docs/install) (latest stable)
+
 ```bash
 git clone https://github.com/your-org/familyhub.git && cd familyhub
-npm install
+npm install                          # also installs aspire-apphost deps
+export AUTH_SECRET=$(openssl rand -base64 32)   # required; use a .env file in dev
 npm run aspire:start
 ```
 
 Open http://localhost:3000 — the Aspire AppHost starts PostgreSQL + app (Dockerfile-based) and runs Prisma migrations on container startup via `docker-entrypoint.sh`.
+
+> **Note:** On first run the Aspire CLI generates the `.aspire/` tooling directory automatically — you don't need to create it manually.
 
 ## 🛠 Tech stack
 

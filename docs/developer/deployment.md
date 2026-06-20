@@ -14,6 +14,15 @@ In all setups you need three environment variables:
 
 ## Option 1: Aspire Docker deployment (recommended)
 
+Before deploying, set the required environment variables. At minimum, generate a secure `AUTH_SECRET`:
+
+```bash
+export AUTH_SECRET=$(openssl rand -base64 32)
+# Persist it (e.g. in a .env file or your CI secrets manager) — changing it logs everyone out.
+```
+
+Then run:
+
 ```bash
 aspire deploy
 ```
