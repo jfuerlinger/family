@@ -12,17 +12,17 @@ In all setups you need three environment variables:
 
 > **Warning:** Rotating `AUTH_SECRET` logs every user out (JWT sessions). Don't regenerate it on every deploy.
 
-## Option 1: Docker Compose (recommended for home servers / VPS)
+## Option 1: Aspire Docker deployment (recommended)
 
 ```bash
-cp .env.example .env
-# edit .env: set a real AUTH_SECRET, keep AUTH_TRUST_HOST=true
-docker compose up --build -d
+aspire deploy
 ```
 
-- The app listens on port **3000**.
-- The container entrypoint runs `prisma migrate deploy` on every start, so schema migrations are applied automatically — including on upgrades (`git pull && docker compose up --build -d`).
-- Postgres data is stored in a named Docker volume; it survives container rebuilds.
+- Uses the Aspire AppHost model as the single source of truth for runtime wiring.
+- Generates Docker Compose artifacts in `aspire-output/` and starts the services.
+- The app listens on port **3000** and DB on **5432**, matching local/runtime defaults.
+- The app container still runs `prisma migrate deploy` on startup (via `docker-entrypoint.sh`).
+- Postgres data is persisted through the volume managed by the Aspire deployment.
 
 ### TLS / reverse proxy
 
@@ -118,5 +118,5 @@ Put the backup line in a cron job and copy the dumps off the machine. Managed Po
 
 1. Back up the database (`pg_dump`, see above).
 2. `git pull`
-3. `docker compose up --build -d` — migrations apply automatically on start.
-4. Watch the logs: `docker compose logs -f app`.
+3. `aspire deploy` — migrations apply automatically on app start.
+4. Watch runtime state via the Aspire dashboard / deploy output.

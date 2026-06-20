@@ -14,7 +14,11 @@
     "db:seed": "npx tsx prisma/seed.ts",
     "db:studio": "prisma studio",
     "ios:sync": "npx cap sync ios",
-    "ios:open": "npx cap open ios"
+    "ios:open": "npx cap open ios",
+    "aspire:start": "npm --prefix aspire-apphost run aspire:start",
+    "aspire:build": "npm --prefix aspire-apphost run aspire:build",
+    "aspire:dev": "npm --prefix aspire-apphost run aspire:dev",
+    "aspire:deploy": "aspire deploy"
   },
   "dependencies": {
     "@capacitor/cli": "^8.4.0",

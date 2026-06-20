@@ -8,12 +8,13 @@ This guide takes you from a fresh clone to a running FamilyHub instance on your 
 | --- | --- | --- |
 | Node.js | 20+ | LTS recommended |
 | npm | 10+ | ships with Node |
-| Docker + Docker Compose | recent | used to run PostgreSQL locally (and for the full Docker run mode) |
+| Docker + Docker Compose | recent | runtime for Aspire-managed containers |
+| Aspire CLI | latest stable | orchestration for all runtime services in this repo |
 | Git | any recent | |
 
 > **Note:** You don't strictly need Docker — any reachable PostgreSQL 15+ instance works. Just point `DATABASE_URL` at it and skip the `db:up` step.
 
-## Local development setup
+## Local runtime setup (Aspire-first)
 
 1. **Clone and install dependencies**
 
@@ -23,31 +24,26 @@ This guide takes you from a fresh clone to a running FamilyHub instance on your 
    npm install
    ```
 
-2. **Start PostgreSQL**
+2. **Update Aspire CLI**
 
    ```bash
-   npm run db:up
+   aspire update --self --yes --non-interactive --channel stable
    ```
 
-   This starts a local Postgres container via Docker Compose (database `family`, user `family`, password `family` on port 5432 — matching `.env.example`).
-
-3. **Configure environment variables**
+3. **Start the full stack through Aspire**
 
    ```bash
-   cp .env.example .env
+   npm run aspire:start
    ```
 
-   The defaults work for local development. See the table below for details.
+   This starts the AppHost (`aspire-apphost/apphost.mts`), which launches:
 
-4. **Apply database migrations**
+   - PostgreSQL (`postgres:17-alpine`) on host port `5432` with persistent volume
+   - The app from the repo `Dockerfile` on host port `3000`
+   - Startup ordering (`app` waits for `db`)
+   - `prisma migrate deploy` automatically on app container start (via `docker-entrypoint.sh`)
 
-   ```bash
-   npx prisma migrate dev
-   ```
-
-   This creates the schema and generates the Prisma client. Prisma 7 reads its configuration (schema path, migrations path, datasource URL) from `prisma.config.ts`, which loads `.env` via `dotenv` — see [database.md](database.md).
-
-5. **(Optional) Seed demo data**
+4. **(Optional) Seed demo data**
 
    ```bash
    npm run db:seed
@@ -59,12 +55,6 @@ This guide takes you from a fresh clone to a running FamilyHub instance on your 
    | --- | --- |
    | `anna@example.com` | `password123` |
    | `max@example.com` | `password123` |
-
-6. **Start the dev server**
-
-   ```bash
-   npm run dev
-   ```
 
    Open http://localhost:3000 — you'll be redirected to the default locale (`/de`). Use `/en` for English.
 
@@ -82,6 +72,9 @@ This guide takes you from a fresh clone to a running FamilyHub instance on your 
 | Command | What it does |
 | --- | --- |
 | `npm run dev` | Start the Next.js dev server on http://localhost:3000 |
+| `npm run aspire:start` | Start all runtime services (db + app) via Aspire AppHost |
+| `npm run aspire:build` | Type-check the TypeScript AppHost |
+| `npm run aspire:deploy` | Prepare and run Docker deployment from the Aspire model |
 | `npm run build` | Production build (standalone output) |
 | `npm run start` | Serve the production build |
 | `npm run lint` | Run ESLint |
@@ -94,20 +87,19 @@ This guide takes you from a fresh clone to a running FamilyHub instance on your 
 | `npm run ios:open` | Open the iOS project in Xcode |
 
 
-## Running everything in Docker
+## Running through generated Docker deployment
 
-If you just want the full app without a local Node setup:
+Docker deployment is prepared via Aspire's Docker integration (`addDockerComposeEnvironment("compose")` in `apphost.mts`):
 
 ```bash
-cp .env.example .env   # set a real AUTH_SECRET
-docker compose up --build
+aspire deploy
 ```
 
-The app is served on http://localhost:3000; the container entrypoint runs `prisma migrate deploy` on startup, so the database schema is always up to date.
+Aspire generates deployment artifacts under `aspire-output/`, builds images, and starts the stack with Docker Compose.
 
 ## Troubleshooting
 
-- **`Can't reach database server`** — make sure Postgres is running (`npm run db:up` or `docker compose ps`) and `DATABASE_URL` matches.
+- **`Can't reach database server`** — make sure the Aspire AppHost is running (`npm run aspire:start`) and `db` is healthy in the Aspire dashboard.
 - **Login always fails** — verify `AUTH_SECRET` is set; if you changed it, existing sessions are invalidated (expected).
 - **Stuck on `/de/login` redirect loops behind a proxy** — set `AUTH_TRUST_HOST=true`.
 - **Prisma CLI ignores your env** — Prisma 7 no longer reads `.env` implicitly for all setups; this project loads it in `prisma.config.ts` via `import 'dotenv/config'`. Make sure `.env` exists in the project root.

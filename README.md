@@ -29,15 +29,15 @@
 | --- | --- | --- | --- |
 | _coming soon_ | _coming soon_ | _coming soon_ | _coming soon_ |
 
-## 🚀 Quickstart (Docker)
+## 🚀 Quickstart (Aspire)
 
 ```bash
 git clone https://github.com/your-org/familyhub.git && cd familyhub
-cp .env.example .env   # then set AUTH_SECRET: openssl rand -base64 32
-docker compose up --build
+npm install
+npm run aspire:start
 ```
 
-Open http://localhost:3000 — database migrations run automatically on container start. For local development without Docker, see the [developer getting-started guide](docs/developer/getting-started.md).
+Open http://localhost:3000 — the Aspire AppHost starts PostgreSQL + app (Dockerfile-based) and runs Prisma migrations on container startup via `docker-entrypoint.sh`.
 
 ## 🛠 Tech stack
 
