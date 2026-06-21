@@ -7,14 +7,18 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "prisma generate",
+    "postinstall": "prisma generate && npm --prefix aspire-apphost install --no-audit --no-fund",
     "db:up": "docker compose up -d db",
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
     "db:seed": "npx tsx prisma/seed.ts",
     "db:studio": "prisma studio",
     "ios:sync": "npx cap sync ios",
-    "ios:open": "npx cap open ios"
+    "ios:open": "npx cap open ios",
+    "aspire:start": "npm --prefix aspire-apphost run aspire:start",
+    "aspire:build": "npm --prefix aspire-apphost run aspire:build",
+    "aspire:dev": "npm --prefix aspire-apphost run aspire:dev",
+    "aspire:deploy": "aspire deploy"
   },
   "dependencies": {
     "@capacitor/cli": "^8.4.0",

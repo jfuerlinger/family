@@ -23,6 +23,7 @@ Next.js 16 (App Router, standalone output, `src/proxy.ts` for next-intl routing)
 - All UI strings via next-intl; messages split per feature in `messages/{de,en}/{common,todos,calendar,mindmaps}.json` (merged in `src/i18n/request.ts`). German uses du-Form.
 - In-app links use `Link`/`useRouter` from `@/i18n/navigation`, never next/link directly.
 - Shared UI kit in `src/components/ui/` (button, input, card, dialog, avatar, badge, empty-state).
+- Runtime services must always be wired and started through the Aspire AppHost (`aspire-apphost/apphost.mts`), including local startup and Docker-based deployment flows.
 
 ## Docs
 Developer docs: `docs/developer/`. End-user docs: `docs/user/{de,en}/`.

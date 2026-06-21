@@ -10,9 +10,10 @@ COPY package.json package-lock.json ./
 # postinstall runs `prisma generate`, which needs the schema + config present.
 COPY prisma.config.ts ./
 COPY prisma ./prisma
+COPY src/lib/database-url.ts ./src/lib/database-url.ts
 # Dummy URL so prisma.config.ts (which reads DATABASE_URL) evaluates cleanly.
 ENV DATABASE_URL="postgresql://build:build@localhost:5432/build?schema=public"
-RUN npm ci
+RUN npm install --no-audit --no-fund
 
 # ---------------------------------------------------------------------------
 # build — prisma generate + next build (standalone output)
@@ -64,6 +65,7 @@ COPY --from=build --chown=nextjs:nodejs /app/public ./public
 COPY --from=migrate-cli --chown=nextjs:nodejs /opt/prisma/node_modules /opt/prisma/node_modules
 COPY --chown=nextjs:nodejs prisma.config.ts /opt/prisma/prisma.config.ts
 COPY --chown=nextjs:nodejs prisma /opt/prisma/prisma
+COPY --chown=nextjs:nodejs src/lib/database-url.ts /opt/prisma/src/lib/database-url.ts
 
 COPY --chown=nextjs:nodejs docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
