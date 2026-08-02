@@ -11,6 +11,8 @@ COPY package.json package-lock.json ./
 COPY prisma.config.ts ./
 COPY prisma ./prisma
 COPY src/lib/database-url.ts ./src/lib/database-url.ts
+# postinstall also runs `npm --prefix aspire-apphost install`, which needs this present.
+COPY aspire-apphost/package.json aspire-apphost/package-lock.json ./aspire-apphost/
 # Dummy URL so prisma.config.ts (which reads DATABASE_URL) evaluates cleanly.
 ENV DATABASE_URL="postgresql://build:build@localhost:5432/build?schema=public"
 RUN npm install --no-audit --no-fund
