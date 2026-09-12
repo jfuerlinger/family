@@ -13,6 +13,7 @@ Next.js 16 (App Router, standalone output, `src/proxy.ts` for next-intl routing)
 
 ## Commands
 - `npm run db:up` then `npx prisma migrate dev` then `npm run dev` — local development
+- `npm test` — unit tests (Vitest); `npm run test:watch` while iterating
 - `npm run db:seed` — demo data (anna@example.com / max@example.com, password `password123`)
 - `docker compose up --build` — full stack; entrypoint runs `prisma migrate deploy` automatically
 - `npm run ios:sync` / `ios:open` — Capacitor iOS app (server-URL mode via `CAP_SERVER_URL`)

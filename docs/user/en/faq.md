@@ -38,4 +38,4 @@ Yes. All lists, tasks, events, and mind maps are visible and editable for the wh
 
 ## Which languages does FamilyHub support?
 
-**German** and **English**. Every family member picks their own language under **Settings** → **Language**.
+**German** and **English**. Choose **Deutsch** or **English** on the sign-in page, or later under **Settings** → **Language**. Every family member picks their own language.

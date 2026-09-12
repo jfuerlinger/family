@@ -4,7 +4,7 @@ Thanks for helping make FamilyHub better! This guide covers code style, the feat
 
 ## Project setup
 
-Follow [getting-started.md](getting-started.md). Before pushing, make sure `npm run lint` and `npm run build` pass.
+Follow [getting-started.md](getting-started.md). Before pushing, make sure `npm test`, `npm run lint`, and `npm run build` pass.
 
 ## Dependencies & the lockfile
 
@@ -20,6 +20,7 @@ After changing dependencies:
 
 - **TypeScript everywhere**, strict mode. No `any` unless there is truly no alternative (and then with a comment).
 - **Formatting/linting**: ESLint with `eslint-config-next` (`npm run lint`). Single quotes, semicolons, 2-space indent — match the surrounding code.
+- **Tests**: Vitest + React Testing Library. Colocate tests next to the code as `*.test.ts` / `*.test.tsx` under `src/`. `npm test` runs once; `npm run test:watch` watches. Prefer testing observable behavior over mocks.
 - **Server first**: pages and data fetching are server components. Add `'use client'` only where interactivity demands it (forms, dialogs, the React Flow editor), and keep client components as leaves.
 - **Mutations are server actions** in `src/lib/actions/<feature>.ts` with `'use server'`. Every action must:
   1. validate all input with **zod**,
@@ -49,7 +50,7 @@ Features follow a consistent **page + actions + messages** pattern. To add a fea
 
 ### PR checklist
 
-- [ ] `npm run lint` and `npm run build` pass
+- [ ] `npm test`, `npm run lint`, and `npm run build` pass
 - [ ] If dependencies changed: `package-lock.json` regenerated and `npm ci --dry-run` exits 0 (keeps the Docker build working)
 - [ ] All new queries/mutations are scoped to the caller's family
 - [ ] All inputs validated with zod; no client-provided `familyId`/foreign IDs trusted

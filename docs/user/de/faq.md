@@ -38,4 +38,4 @@ Ja. Alle Listen, Aufgaben, Termine und Mindmaps sind für die ganze Familie sich
 
 ## In welchen Sprachen gibt es FamilyHub?
 
-Auf **Deutsch** und **Englisch**. Jedes Familienmitglied stellt seine Sprache selbst unter **Einstellungen** → **Sprache** ein.
+Auf **Deutsch** und **Englisch**. Wähle **Deutsch** oder **English** auf der Anmeldeseite, oder später unter **Einstellungen** → **Sprache**. Jedes Familienmitglied stellt seine Sprache selbst ein.

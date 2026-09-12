@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { getLocale } from 'next-intl/server';
 import { prisma } from '@/lib/prisma';
+import { persistUserLocaleByEmail } from '@/lib/persist-user-locale';
 import { signIn, signOut, auth } from '@/lib/auth';
 import { MEMBER_COLORS } from '@/lib/utils';
 
@@ -67,6 +68,8 @@ export async function loginUser(
     if (error instanceof AuthError) return { error: 'invalidCredentials' };
     throw error;
   }
+  const email = String(formData.get('email') ?? '').toLowerCase().trim();
+  await persistUserLocaleByEmail(email, locale, prisma.user);
   redirect(`/${locale}/dashboard`);
 }
 
@@ -90,6 +93,7 @@ export async function loginWithTestUserShortcut(
     if (error instanceof AuthError) return { error: 'invalidCredentials' };
     throw error;
   }
+  await persistUserLocaleByEmail(TEST_LOGIN_EMAIL, locale, prisma.user);
   redirect(`/${locale}/dashboard`);
 }
 

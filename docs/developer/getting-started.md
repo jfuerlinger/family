@@ -91,6 +91,8 @@ This guide takes you from a fresh clone to a running FamilyHub instance on your 
 | `npm run build` | Production build (standalone output) |
 | `npm run start` | Serve the production build |
 | `npm run lint` | Run ESLint |
+| `npm test` | Run unit tests once (Vitest) |
+| `npm run test:watch` | Re-run unit tests on file changes |
 | `npm run db:up` | Start the local PostgreSQL container |
 | `npm run db:seed` | Seed demo data (demo family, two users) |
 | `npx prisma migrate dev` | Create/apply migrations in development and regenerate the client |

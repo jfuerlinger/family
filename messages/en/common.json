@@ -17,6 +17,7 @@
     "back": "Back",
     "today": "Today",
     "optional": "optional",
+    "language": "Language",
     "error": "Something went wrong. Please try again.",
     "confirmDelete": "Really delete? This cannot be undone."
   },

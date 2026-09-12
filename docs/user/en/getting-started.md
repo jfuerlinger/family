@@ -42,7 +42,11 @@ You'll immediately see all shared tasks, events, and mind maps.
 
 ## Switching the language
 
-FamilyHub is available in German and English:
+FamilyHub is available in German and English.
+
+On **Sign in** or **Sign up**, tap **Deutsch** or **English**. After you sign in, that language is saved to your profile.
+
+You can also change it later:
 
 1. Open **Settings**.
 2. Under **Language**, choose **German** or **English**.

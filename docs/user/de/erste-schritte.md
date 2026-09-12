@@ -42,7 +42,11 @@ Schon siehst du alle gemeinsamen Aufgaben, Termine und Mindmaps.
 
 ## Sprache wechseln
 
-FamilyHub gibt es auf Deutsch und Englisch:
+FamilyHub gibt es auf Deutsch und Englisch.
+
+Auf **Anmelden** oder **Registrieren** tippe auf **Deutsch** oder **English**. Nach dem Anmelden wird diese Sprache in deinem Profil gespeichert.
+
+Du kannst sie später auch ändern:
 
 1. Öffne **Einstellungen**.
 2. Wähle unter **Sprache** zwischen **Deutsch** und **Englisch**.

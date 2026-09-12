@@ -1,5 +1,6 @@
 import { Users } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
+import { LocaleSwitcher } from '@/components/layout/locale-switcher';
 
 export default async function AuthLayout({ children }: { children: React.ReactNode }) {
   const t = await getTranslations('app');
@@ -14,6 +15,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
           <p className="text-sm text-slate-500">{t('tagline')}</p>
         </div>
       </div>
+      <LocaleSwitcher />
       <div className="w-full max-w-sm">{children}</div>
     </main>
   );
