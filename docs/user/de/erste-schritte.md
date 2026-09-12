@@ -71,6 +71,7 @@ FamilyHub ist eine Web-App, die du wie eine normale App auf den Home-Bildschirm 
 
 ## Wie geht's weiter?
 
+- [Use-Cases](usecases.md) – alle Abläufe der App mit Screenshots
 - [Aufgaben](aufgaben.md) – gemeinsame To-do-Listen für die ganze Familie
 - [Kalender](kalender.md) – alle Termine auf einen Blick
 - [Mindmaps](mindmaps.md) – gemeinsam Entscheidungen treffen

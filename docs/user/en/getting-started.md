@@ -71,6 +71,7 @@ FamilyHub is a web app you can add to your home screen like a regular app — no
 
 ## What's next?
 
+- [Use cases](use-cases.md) — every flow in the app, with screenshots
 - [Tasks](tasks.md) — shared to-do lists for the whole family
 - [Calendar](calendar.md) — all your events in one view
 - [Mind maps](mindmaps.md) — make decisions together

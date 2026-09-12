@@ -21,6 +21,7 @@ Welcome! This is the documentation hub for **FamilyHub**, the self-hostable fami
 | Document | What it covers |
 | --- | --- |
 | [Getting started](user/en/getting-started.md) | Registration, creating or joining a family, language, installing on your phone |
+| [Use cases](user/en/use-cases.md) | Every current use case, with screenshots |
 | [Tasks](user/en/tasks.md) | Lists, tasks, due dates, priorities, assignees |
 | [Calendar](user/en/calendar.md) | Month view, events, colors, day agenda |
 | [Mindmaps](user/en/mindmaps.md) | Family decision-making with mindmaps, node types, auto-save |
@@ -32,6 +33,7 @@ Welcome! This is the documentation hub for **FamilyHub**, the self-hostable fami
 | Dokument | Inhalt |
 | --- | --- |
 | [Erste Schritte](user/de/erste-schritte.md) | Registrierung, Familie gründen oder beitreten, Sprache, Installation am Handy |
+| [Use-Cases](user/de/usecases.md) | Alle aktuellen Use-Cases, mit Screenshots |
 | [Aufgaben](user/de/aufgaben.md) | Listen, Aufgaben, Fälligkeiten, Prioritäten, Zuweisungen |
 | [Kalender](user/de/kalender.md) | Monatsansicht, Termine, Farben, Tagesübersicht |
 | [Mindmaps](user/de/mindmaps.md) | Familienentscheidungen mit Mindmaps, Knotentypen, Auto-Speichern |
