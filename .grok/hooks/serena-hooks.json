@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "grep|read_file|run_terminal_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "serena-hooks remind --client=grok",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "serena-hooks cleanup --client=grok",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
